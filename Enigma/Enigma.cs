@@ -42,7 +42,7 @@ namespace Enigma
             for (int i = 0; i < input.Length; i++)
             {
                 char c = input[i];
-                if (!char.IsLetter(c))
+                if (!c.IsEnglishLetter())
                 {
                     output[i] = c;
                     continue;
