@@ -9,34 +9,36 @@ namespace Enigma
     public class Rotor
     {
         private string wiring;
-        private int notch;
         private int position;
 
-        public Rotor(string wiring, int notch)
+        public Rotor()
         {
-            this.wiring = wiring;
-            this.notch = notch;
+            this.wiring = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             this.position = 0;
         }
 
-        public char Encode(char c, bool reverse = false)
+        public Rotor(string wiring, int position)
         {
-            int offset = (c - 'A' + position) % 26;
-            if (reverse)
-            {
-                return (char)(((wiring.IndexOf((char)('A' + offset)) - position + 26) % 26) + 'A');
-            }
-            else
-            {
-                return (char)((((wiring[offset] - 'A') - position + 26) % 26) + 'A');
-            }
+            this.wiring = wiring;
+            this.position = position;
         }
 
-        public bool Step()
+        public void Rotate()
         {
             position = (position + 1) % 26;
-            return position == notch;
+        }
+
+        public char Forward(char input)
+        {
+            int index = (input - 'A' + position) % 26;
+            return wiring[index];
+        }
+
+        public char Reverse(char input)
+        {
+            int index = wiring.IndexOf(input);
+            index = (index - position + 26) % 26;
+            return (char)('A' + index);
         }
     }
-
 }
