@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Enigma
+﻿namespace Enigma
 {
     public class Rotor
     {
         private string wiring;
         private int position;
+
+        public char Current => wiring[position];
 
         public Rotor()
         {
@@ -23,9 +19,11 @@ namespace Enigma
             this.position = position;
         }
 
-        public void Rotate()
+        public bool Rotate()
         {
             position = (position + 1) % 26;
+            if (position == 0) return true;
+            return false;
         }
 
         public char Forward(char input)

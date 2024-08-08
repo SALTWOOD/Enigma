@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Enigma
 {
@@ -51,20 +46,21 @@ namespace Enigma
                 bool isUpper = char.IsUpper(c);
                 char letter = char.ToUpper(c);
 
-                rotors[0].Rotate();
-
                 letter = plugboard.Swap(letter);
                 foreach (var rotor in rotors)
                 {
                     letter = rotor.Forward(letter);
                 }
                 letter = reflector.Reflect(letter);
-                for (int j = rotors.Count - 1; j >= 0; j--)
+                foreach (var rotor in rotors.Reverse<Rotor>())
                 {
-                    letter = rotors[j].Reverse(letter);
+                    letter = rotor.Reverse(letter);
                 }
                 letter = plugboard.Swap(letter);
-
+                foreach (var rotor in rotors)
+                {
+                    if (!rotor.Rotate()) break;
+                }
                 output[i] = isUpper ? letter : char.ToLower(letter);
             }
 
